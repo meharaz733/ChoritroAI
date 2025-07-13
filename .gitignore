@@ -3,6 +3,12 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+#model
+backend/app/model.keras
+
+#token
+token.txt
+
 # C extensions
 *.so
 
