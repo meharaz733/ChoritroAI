@@ -1,0 +1,72 @@
+.Output-container {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    height: 800px;
+    width: 35%;
+
+    position: absolute;
+    right: 100px;
+    top: 50px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.Output-container p{
+    font-size:x-large;
+}
+
+.output-button-container {
+    display: flex;
+
+    position: absolute;
+    bottom: 170px;
+    right: 290px;
+}
+
+.incorrect-button {
+    height: 40px;
+    width: 140px;
+    background-color: rgba(255, 0, 0, 0.678);
+    border: none;
+    border-radius: 10px;
+    font-size: large;
+    color: white;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.incorrect-button:hover {
+    background-color: brown;
+}
+
+.correct-button {
+    height: 40px;
+    width: 140px;
+    background-color: rgba(0, 128, 0, 0.651);
+    border: none;
+    border-radius: 10px;
+    font-size: large;
+    margin-left: 20px;
+    color: white;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.correct-button:hover {
+    background-color: green;
+}
+
+.wrong-icon, .right-icon, .sound-icon {
+    font-size: larger;
+}
+
+.output-image{
+    border: 1px solid black;
+    height: 400px;
+    width: 90%;
+    margin-top: 30px;
+}
