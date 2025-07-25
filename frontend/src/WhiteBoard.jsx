@@ -1,7 +1,7 @@
 import './WhiteBoard.css'
 import { BsPencil } from "react-icons/bs";
 import { LuEraser } from "react-icons/lu";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Output from './Output';
 
 const WhiteBoard = () => {
@@ -10,6 +10,13 @@ const WhiteBoard = () => {
     const [isDrawing, setIsDrawing] = useState(false);
     const [tool, setTool] = useState('pencil'); 
     const [writtenImage, setWrittenImage] = useState(null);
+    
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }, []);
 
 
     const startDrawing = (e) => {
@@ -54,14 +61,28 @@ const WhiteBoard = () => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
     };
 
    const handleSubmit = () => {
     const canvas = canvasRef.current;
     const imageData = canvas.toDataURL("image/png");
-    setWrittenImage(imageData);
-};
+    const base64Image = imageData.replace(/^data:image\/png;base64,/, '');
 
+    console.log(base64Image)
+
+    fetch('http://127.0.0.1:8000/predict', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ image: base64Image }),
+      })
+        .then(res => res.json())
+        .then(data => console.log('Server response:', data))
+        .catch(err => console.error('Error:', err));
+};
 
 
     return (

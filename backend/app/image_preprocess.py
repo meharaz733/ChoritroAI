@@ -1,18 +1,22 @@
-from tensorflow.keras.preprocessing import image
 import numpy as np
+from PIL import Image
 
 
-def image_preprocessor(img_path: str):
-    img = image.load_img(img_path, target_size=(192, 192))
-    img_array = image.img_to_array(img)
-    img_array = img_array / 255.0
+def image_preprocessor(pil_img: Image.Image):
+
+    """This function expect PIL.Image.Image object. Then it resize the image to 192x192, normalize the pixel value, expand the dimension to match shape and then return the image."""
+    
+    img = pil_img.resize(size=(192,192))    
+    img = np.array(img)/ 255.0
+    
 
     #print(img_array.shape)
-    img_array = np.expand_dims(img_array, axis=0)
+    
+    img = np.expand_dims(img, axis=0)
+    
     #print(img_array.shape)
 
-    return img_array
+    return img
 
 
 #path = input()
-#image_preprocessor(path)
