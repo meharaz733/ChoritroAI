@@ -8,6 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import base64
 from io import BytesIO
 from PIL import Image
+from utils.class_list import class_name_
 
 
 app = FastAPI()
@@ -27,27 +28,12 @@ app.add_middleware(
 def predict_img(data: User_data):
     img_bytes = base64.b64decode(data.image)
     pil_img = Image.open(BytesIO(img_bytes)).convert("RGB")
-
-
     img = image_preprocessor(pil_img=pil_img)
 
-    #print(type(img))
-    
-    #pil_img.show()
-    #print(pil_img)
-    #print(pil_img.format)
-    #print(pil_img.size)
-    #print(pil_img.mode)
-    #print(np.array(pil_img).min(), np.array(pil_img).max())
-    
+    #prediction
     pred = model.predict(img)
     ans = np.argmax(pred)
-    print(pred)
-    print(ans)
-
+    
+    print("Folder name:", class_name_(ans))
         
     return JSONResponse(status_code=200, content={'message': 'the class name is: ' + str(ans+1) })
-
-@app.post('/sound')
-def voice(class_pointer: int):
-    pass
