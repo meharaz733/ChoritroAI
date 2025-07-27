@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 from model_loader import load_my_model
 from image_preprocess import image_preprocessor
 import numpy as np
-from data_model import User_data
+from data_model import User_data, Response_data  #Pydantic Model for data validation
 from fastapi.middleware.cors import CORSMiddleware
 import base64
 from io import BytesIO
@@ -24,7 +24,7 @@ app.add_middleware(
 )
 
 
-@app.post('/predict')
+@app.post('/predict', response_model=Response_data)
 def predict_img(data: User_data):
     img_bytes = base64.b64decode(data.image)
     pil_img = Image.open(BytesIO(img_bytes)).convert("RGB")
@@ -36,4 +36,4 @@ def predict_img(data: User_data):
     
     print("Folder name:", class_name_(ans))
         
-    return JSONResponse(status_code=200, content={'message': 'the class name is: ' + str(ans+1) })
+    return Response_data(class_folder=class_name_(ans))
